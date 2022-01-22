@@ -62,8 +62,6 @@ func ConvertToConfirmation(raw []byte, l *logger.Logger) ([]Confirmation, error)
     EmployeeWageType:               data.EmployeeWageType,
     EmployeeWageGroup:              data.EmployeeWageGroup,
     BreakDurationUnit:              data.BreakDurationUnit,
-    BreakDurationUnitISOCode:       data.BreakDurationUnitISOCode,
-    BreakDurationUnitSAPCode:       data.BreakDurationUnitSAPCode,
     ConfirmedBreakDuration:         data.ConfirmedBreakDuration,
     EmployeeSuitability:            data.EmployeeSuitability,
     NumberOfEmployees:              data.NumberOfEmployees,
@@ -81,44 +79,28 @@ func ConvertToConfirmation(raw []byte, l *logger.Logger) ([]Confirmation, error)
     ConfirmedExecutionEndDate:      data.ConfirmedExecutionEndDate,
     ConfirmedExecutionEndTime:      data.ConfirmedExecutionEndTime,
     ConfirmationUnit:               data.ConfirmationUnit,
-    ConfirmationUnitISOCode:        data.ConfirmationUnitISOCode,
-    ConfirmationUnitSAPCode:        data.ConfirmationUnitSAPCode,
     ConfirmationYieldQuantity:      data.ConfirmationYieldQuantity,
     ConfirmationScrapQuantity:      data.ConfirmationScrapQuantity,
     VarianceReasonCode:             data.VarianceReasonCode,
     OpWorkQuantityUnit1:            data.OpWorkQuantityUnit1,
-    WorkQuantityUnit1ISOCode:       data.WorkQuantityUnit1ISOCode,
-    WorkQuantityUnit1SAPCode:       data.WorkQuantityUnit1SAPCode,
     OpConfirmedWorkQuantity1:       data.OpConfirmedWorkQuantity1,
     NoFurtherOpWorkQuantity1IsExpd: data.NoFurtherOpWorkQuantity1IsExpd,
     OpWorkQuantityUnit2:            data.OpWorkQuantityUnit2,
-    WorkQuantityUnit2ISOCode:       data.WorkQuantityUnit2ISOCode,
-    WorkQuantityUnit2SAPCode:       data.WorkQuantityUnit2SAPCode,
     OpConfirmedWorkQuantity2:       data.OpConfirmedWorkQuantity2,
     NoFurtherOpWorkQuantity2IsExpd: data.NoFurtherOpWorkQuantity2IsExpd,
     OpWorkQuantityUnit3:            data.OpWorkQuantityUnit3,
-    WorkQuantityUnit3ISOCode:       data.WorkQuantityUnit3ISOCode,
-    WorkQuantityUnit3SAPCode:       data.WorkQuantityUnit3SAPCode,
     OpConfirmedWorkQuantity3:       data.OpConfirmedWorkQuantity3,
     NoFurtherOpWorkQuantity3IsExpd: data.NoFurtherOpWorkQuantity3IsExpd,
     OpWorkQuantityUnit4:            data.OpWorkQuantityUnit4,
-    WorkQuantityUnit4ISOCode:       data.WorkQuantityUnit4ISOCode,
-    WorkQuantityUnit4SAPCode:       data.WorkQuantityUnit4SAPCode,
     OpConfirmedWorkQuantity4:       data.OpConfirmedWorkQuantity4,
     NoFurtherOpWorkQuantity4IsExpd: data.NoFurtherOpWorkQuantity4IsExpd,
     OpWorkQuantityUnit5:            data.OpWorkQuantityUnit5,
-    WorkQuantityUnit5ISOCode:       data.WorkQuantityUnit5ISOCode,
-    WorkQuantityUnit5SAPCode:       data.WorkQuantityUnit5SAPCode,
     OpConfirmedWorkQuantity5:       data.OpConfirmedWorkQuantity5,
     NoFurtherOpWorkQuantity5IsExpd: data.NoFurtherOpWorkQuantity5IsExpd,
     OpWorkQuantityUnit6:            data.OpWorkQuantityUnit6,
-    WorkQuantityUnit6ISOCode:       data.WorkQuantityUnit6ISOCode,
-    WorkQuantityUnit6SAPCode:       data.WorkQuantityUnit6SAPCode,
     OpConfirmedWorkQuantity6:       data.OpConfirmedWorkQuantity6,
     NoFurtherOpWorkQuantity6IsExpd: data.NoFurtherOpWorkQuantity6IsExpd,
     BusinessProcessEntryUnit:       data.BusinessProcessEntryUnit,
-    BusProcessEntrUnitISOCode:      data.BusProcessEntrUnitISOCode,
-    BusProcessEntryUnitSAPCode:     data.BusProcessEntryUnitSAPCode,
     BusinessProcessConfirmedQty:    data.BusinessProcessConfirmedQty,
     NoFurtherBusinessProcQtyIsExpd: data.NoFurtherBusinessProcQtyIsExpd,
 		})
@@ -179,8 +161,6 @@ func ConvertToMaterialMovements(raw []byte, l *logger.Logger) ([]MaterialMovemen
     StorageBin:                 data.StorageBin,
     MaterialDocumentItemText:   data.MaterialDocumentItemText,
     EntryUnit:                  data.EntryUnit,
-    EntryUnitISOCode:           data.EntryUnitISOCode,
-    EntryUnitSAPCode:           data.EntryUnitSAPCode,
     QuantityInEntryUnit:        data.QuantityInEntryUnit,
 		})
 	}
@@ -188,3 +168,37 @@ func ConvertToMaterialMovements(raw []byte, l *logger.Logger) ([]MaterialMovemen
 	return materialMovements, nil
 }
 
+func ConvertToBatchCharacteristic(raw []byte, l *logger.Logger) ([]BatchCharacteristic, error) {
+	pm := &responses.BatchCharacteristic{}
+
+	err := json.Unmarshal(raw, pm)
+	if err != nil {
+		return nil, xerrors.Errorf("cannot convert to BatchCharacteristic. unmarshal error: %w", err)
+	}
+	if len(pm.D.Results) == 0 {
+		return nil, xerrors.New("Result data is not exist")
+	}
+	if len(pm.D.Results) > 10 {
+		l.Info("raw data has too many Results. %d Results exist. show the first 10 of Results array", len(pm.D.Results))
+	}
+
+	batchCharacteristic := make([]BatchCharacteristic, 0, 10)
+	for i := 0; i < 10 && i < len(pm.D.Results); i++ {
+		data := pm.D.Results[i]
+		batchCharacteristic = append(batchCharacteristic, BatchCharacteristic{
+			ConfirmationGroup:    data.ConfirmationGroup,
+			ConfirmationCount:    data.ConfirmationCount,
+			MaterialDocument:     data.MaterialDocument,
+			MaterialDocumentItem: data.MaterialDocumentItem,
+			MaterialDocumentYear: data.MaterialDocumentYear,
+			Plant:                data.Plant,
+			Material:             data.Material,
+			Batch:                data.Batch,
+			CharcInternalID:      data.CharcInternalID,
+			Characteristic:       data.Characteristic,
+			CharcValue:           data.CharcValue,
+		})
+	}
+
+	return batchCharacteristic, nil
+}

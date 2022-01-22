@@ -34,9 +34,9 @@ sap-api-integrations-process-order-confirmation-reads において、API への�
 
 ### SDC レイアウト
 
-*　inoutSDC.ProcessOrderConfirmation.OrderID (オーダーID)
-*　inoutSDC.ProcessOrderConfirmation.MaterialMovements.Batch（ロット）
-*　inoutSDC.ProcessOrderConfirmation.ConfirmationGroup（確認グループ）
+* inoutSDC.ProcessOrderConfirmation.OrderID (オーダーID)
+* inoutSDC.ProcessOrderConfirmation.MaterialMovements.Batch（ロット）
+* inoutSDC.ProcessOrderConfirmation.ConfirmationGroup（確認グループ）
 
 ## SAP API Bussiness Hub の API の選択的コール
 
@@ -86,6 +86,11 @@ func (c *SAPAPICaller) AsyncGetProcessOrderConfirmation(orderID, batch, confirma
 		case "MaterialMovements":
 			func() {
 				c.MaterialMovements(batch)
+				wg.Done()
+			}()
+		case "BatchCharacteristic":
+			func() {
+				c.BatchCharacteristic(batch)
 				wg.Done()
 			}()
 		case "ConfByOrderIDConfGroup":

@@ -41,6 +41,11 @@ func (c *SAPAPICaller) AsyncGetProcessOrderConfirmation(orderID, batch, confirma
 				c.MaterialMovements(batch)
 				wg.Done()
 			}()
+		case "BatchCharacteristic":
+			func() {
+				c.BatchCharacteristic(batch)
+				wg.Done()
+			}()
 		case "ConfByOrderIDConfGroup":
 			func() {
 				c.ConfByOrderIDConfGroup(orderID, confirmationGroup)
@@ -146,6 +151,37 @@ func (c *SAPAPICaller) callProcessOrderConfirmationSrvAPIRequirementConfByOrderI
 	return data, nil
 }
 
+func (c *SAPAPICaller) BatchCharacteristic(batch string) {
+	batchCharacteristicData, err := c.callProcessOrderConfirmationSrvAPIRequirementBatchCharacteristic("ProcOrderConfBatchCharc", batch)
+	if err != nil {
+		c.log.Error(err)
+		return
+	}
+	c.log.Info(batchCharacteristicData)
+
+}
+
+func (c *SAPAPICaller) callProcessOrderConfirmationSrvAPIRequirementBatchCharacteristic(api, batch string) ([]sap_api_output_formatter.BatchCharacteristic, error) {
+	url := strings.Join([]string{c.baseURL, "API_PROC_ORDER_CONFIRMATION_2_SRV", api}, "/")
+	req, _ := http.NewRequest("GET", url, nil)
+
+	c.setHeaderAPIKeyAccept(req)
+	c.getQueryWithBatchCharacteristic(req, batch)
+
+	resp, err := new(http.Client).Do(req)
+	if err != nil {
+		return nil, xerrors.Errorf("API request error: %w", err)
+	}
+	defer resp.Body.Close()
+
+	byteArray, _ := ioutil.ReadAll(resp.Body)
+	data, err := sap_api_output_formatter.ConvertToBatchCharacteristic(byteArray, c.log)
+	if err != nil {
+		return nil, xerrors.Errorf("convert error: %w", err)
+	}
+	return data, nil
+}
+
 func (c *SAPAPICaller) setHeaderAPIKeyAccept(req *http.Request) {
 	req.Header.Set("APIKey", c.apiKey)
 	req.Header.Set("Accept", "application/json")
@@ -166,5 +202,11 @@ func (c *SAPAPICaller) getQueryWithMaterialMovements(req *http.Request, batch st
 func (c *SAPAPICaller) getQueryWithConfByOrderIDConfGroup(req *http.Request, orderID, confirmationGroup string) {
 	params := req.URL.Query()
 	params.Add("$filter", fmt.Sprintf("OrderID eq '%s' and ConfirmationGroup eq '%s'", orderID, confirmationGroup))
+	req.URL.RawQuery = params.Encode()
+}
+
+func (c *SAPAPICaller) getQueryWithBatchCharacteristic(req *http.Request, batch string) {
+	params := req.URL.Query()
+	params.Add("$filter", fmt.Sprintf("Batch eq '%s'", batch))
 	req.URL.RawQuery = params.Encode()
 }

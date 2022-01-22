@@ -61,7 +61,6 @@ type SDC struct {
 		ConfirmationGroup              string      `json:"ConfirmationGroup"`
 		ConfirmationCount              string      `json:"ConfirmationCount"`
 		OrderID                        string      `json:"OrderID"`
-		Sequence                       string      `json:"Sequence"`
 		OrderOperation                 string      `json:"OrderOperation"`
 		OrderSuboperation              string      `json:"OrderSuboperation"`
 		OrderType                      string      `json:"OrderType"`
@@ -90,8 +89,6 @@ type SDC struct {
 		Plant                          string      `json:"Plant"`
 		WorkCenterTypeCode             string      `json:"WorkCenterTypeCode"`
 		WorkCenter                     string      `json:"WorkCenter"`
-		CapacityCategoryCode           string      `json:"CapacityCategoryCode"`
-		CapacityRequirementSplit       string      `json:"CapacityRequirementSplit"`
 		Personnel                      string      `json:"Personnel"`
 		TimeRecording                  string      `json:"TimeRecording"`
 		EmployeeWageType               string      `json:"EmployeeWageType"`
@@ -116,9 +113,10 @@ type SDC struct {
 		ConfirmationUnit               string      `json:"ConfirmationUnit"`
 		ConfirmationYieldQuantity      string      `json:"ConfirmationYieldQuantity"`
 		ConfirmationScrapQuantity      string      `json:"ConfirmationScrapQuantity"`
-		ConfirmationReworkQuantity     string      `json:"ConfirmationReworkQuantity"`
 		VarianceReasonCode             string      `json:"VarianceReasonCode"`
 		OpWorkQuantityUnit1            string      `json:"OpWorkQuantityUnit1"`
+		WorkQuantityUnit1ISOCode       string      `json:"WorkQuantityUnit1ISOCode"`
+		WorkQuantityUnit1SAPCode       string      `json:"WorkQuantityUnit1SAPCode"`
 		OpConfirmedWorkQuantity1       string      `json:"OpConfirmedWorkQuantity1"`
 		NoFurtherOpWorkQuantity1IsExpd bool        `json:"NoFurtherOpWorkQuantity1IsExpd"`
 		OpWorkQuantityUnit2            string      `json:"OpWorkQuantityUnit2"`

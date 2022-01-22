@@ -44,8 +44,6 @@ type Confirmation struct {
 			EmployeeWageType               string      `json:"EmployeeWageType"`
 			EmployeeWageGroup              string      `json:"EmployeeWageGroup"`
 			BreakDurationUnit              string      `json:"BreakDurationUnit"`
-			BreakDurationUnitISOCode       string      `json:"BreakDurationUnitISOCode"`
-			BreakDurationUnitSAPCode       string      `json:"BreakDurationUnitSAPCode"`
 			ConfirmedBreakDuration         string      `json:"ConfirmedBreakDuration"`
 			EmployeeSuitability            string      `json:"EmployeeSuitability"`
 			NumberOfEmployees              string      `json:"NumberOfEmployees"`
@@ -63,44 +61,28 @@ type Confirmation struct {
 			ConfirmedExecutionEndDate      string      `json:"ConfirmedExecutionEndDate"`
 			ConfirmedExecutionEndTime      string      `json:"ConfirmedExecutionEndTime"`
 			ConfirmationUnit               string      `json:"ConfirmationUnit"`
-			ConfirmationUnitISOCode        string      `json:"ConfirmationUnitISOCode"`
-			ConfirmationUnitSAPCode        string      `json:"ConfirmationUnitSAPCode"`
 			ConfirmationYieldQuantity      string      `json:"ConfirmationYieldQuantity"`
 			ConfirmationScrapQuantity      string      `json:"ConfirmationScrapQuantity"`
 			VarianceReasonCode             string      `json:"VarianceReasonCode"`
 			OpWorkQuantityUnit1            string      `json:"OpWorkQuantityUnit1"`
-			WorkQuantityUnit1ISOCode       string      `json:"WorkQuantityUnit1ISOCode"`
-			WorkQuantityUnit1SAPCode       string      `json:"WorkQuantityUnit1SAPCode"`
 			OpConfirmedWorkQuantity1       string      `json:"OpConfirmedWorkQuantity1"`
 			NoFurtherOpWorkQuantity1IsExpd bool        `json:"NoFurtherOpWorkQuantity1IsExpd"`
 			OpWorkQuantityUnit2            string      `json:"OpWorkQuantityUnit2"`
-			WorkQuantityUnit2ISOCode       string      `json:"WorkQuantityUnit2ISOCode"`
-			WorkQuantityUnit2SAPCode       string      `json:"WorkQuantityUnit2SAPCode"`
 			OpConfirmedWorkQuantity2       string      `json:"OpConfirmedWorkQuantity2"`
 			NoFurtherOpWorkQuantity2IsExpd bool        `json:"NoFurtherOpWorkQuantity2IsExpd"`
 			OpWorkQuantityUnit3            string      `json:"OpWorkQuantityUnit3"`
-			WorkQuantityUnit3ISOCode       string      `json:"WorkQuantityUnit3ISOCode"`
-			WorkQuantityUnit3SAPCode       string      `json:"WorkQuantityUnit3SAPCode"`
 			OpConfirmedWorkQuantity3       string      `json:"OpConfirmedWorkQuantity3"`
 			NoFurtherOpWorkQuantity3IsExpd bool        `json:"NoFurtherOpWorkQuantity3IsExpd"`
 			OpWorkQuantityUnit4            string      `json:"OpWorkQuantityUnit4"`
-			WorkQuantityUnit4ISOCode       string      `json:"WorkQuantityUnit4ISOCode"`
-			WorkQuantityUnit4SAPCode       string      `json:"WorkQuantityUnit4SAPCode"`
 			OpConfirmedWorkQuantity4       string      `json:"OpConfirmedWorkQuantity4"`
 			NoFurtherOpWorkQuantity4IsExpd bool        `json:"NoFurtherOpWorkQuantity4IsExpd"`
 			OpWorkQuantityUnit5            string      `json:"OpWorkQuantityUnit5"`
-			WorkQuantityUnit5ISOCode       string      `json:"WorkQuantityUnit5ISOCode"`
-			WorkQuantityUnit5SAPCode       string      `json:"WorkQuantityUnit5SAPCode"`
 			OpConfirmedWorkQuantity5       string      `json:"OpConfirmedWorkQuantity5"`
 			NoFurtherOpWorkQuantity5IsExpd bool        `json:"NoFurtherOpWorkQuantity5IsExpd"`
 			OpWorkQuantityUnit6            string      `json:"OpWorkQuantityUnit6"`
-			WorkQuantityUnit6ISOCode       string      `json:"WorkQuantityUnit6ISOCode"`
-			WorkQuantityUnit6SAPCode       string      `json:"WorkQuantityUnit6SAPCode"`
 			OpConfirmedWorkQuantity6       string      `json:"OpConfirmedWorkQuantity6"`
 			NoFurtherOpWorkQuantity6IsExpd bool        `json:"NoFurtherOpWorkQuantity6IsExpd"`
 			BusinessProcessEntryUnit       string      `json:"BusinessProcessEntryUnit"`
-			BusProcessEntrUnitISOCode      string      `json:"BusProcessEntrUnitISOCode"`
-			BusProcessEntryUnitSAPCode     string      `json:"BusProcessEntryUnitSAPCode"`
 			BusinessProcessConfirmedQty    string      `json:"BusinessProcessConfirmedQty"`
 			NoFurtherBusinessProcQtyIsExpd bool        `json:"NoFurtherBusinessProcQtyIsExpd"`
 		} `json:"results"`

@@ -42,8 +42,6 @@ type MaterialMovements struct {
 			StorageBin                 string      `json:"StorageBin"`
 			MaterialDocumentItemText   string      `json:"MaterialDocumentItemText"`
 			EntryUnit                  string      `json:"EntryUnit"`
-			EntryUnitISOCode           string      `json:"EntryUnitISOCode"`
-			EntryUnitSAPCode           string      `json:"EntryUnitSAPCode"`
 			QuantityInEntryUnit        string      `json:"QuantityInEntryUnit"`
 		} `json:"results"`
 	} `json:"d"`
